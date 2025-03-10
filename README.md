@@ -1,2 +1,5 @@
-# Terraform-OCI-VMs-Kubernetes
-Usar o Terraform para criar VMs na OCI com o Kubernetes pronto para uso.
+# Terraform-Azure-VMs-Kubernetes
+
+<br>
+
+Usar o Terraform para criar VMs no Azure com o Kubernetes pronto para uso.
