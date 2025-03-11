@@ -8,6 +8,7 @@ resource "azurerm_resource_group" "k8s_vms" {
 resource "azurerm_linux_virtual_machine" "vm" {
   for_each              = local.nodes
   name                  = each.value.node_name
+  computer_name         = each.value.node_name
   resource_group_name   = azurerm_resource_group.k8s_vms.name
   location              = azurerm_resource_group.k8s_vms.location
   size                  = var.vm_size
@@ -15,7 +16,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   network_interface_ids = [azurerm_network_interface.nic[each.key].id, ]
   admin_ssh_key {
     username   = var.admin_user
-    public_key = file("~/.ssh/id_rsa.pub")
+    public_key = join("\n", local.authorized_keys)
   }
 
   os_disk {
