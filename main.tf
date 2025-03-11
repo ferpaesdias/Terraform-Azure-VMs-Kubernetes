@@ -6,12 +6,13 @@ resource "azurerm_resource_group" "k8s_vms" {
 
 # Criar VM
 resource "azurerm_linux_virtual_machine" "vm" {
-  name                  = "node01"
+  for_each              = local.nodes
+  name                  = each.value.node_name
   resource_group_name   = azurerm_resource_group.k8s_vms.name
   location              = azurerm_resource_group.k8s_vms.location
   size                  = var.vm_size
   admin_username        = var.admin_user
-  network_interface_ids = [azurerm_network_interface.nic.id, ]
+  network_interface_ids = [azurerm_network_interface.nic[each.key].id, ]
   admin_ssh_key {
     username   = var.admin_user
     public_key = file("~/.ssh/id_rsa.pub")
@@ -30,3 +31,11 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 }
 
+locals {
+  nodes = {
+    for i in range(1, 1 + var.qts_vms) :
+    i => {
+      node_name = format("node%d", i)
+    }
+  }
+}

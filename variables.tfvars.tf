@@ -44,3 +44,9 @@ variable "image_version" {
   type    = string
   default = "latest"
 }
+
+# Quantidades de VMs
+variable "qts_vms" {
+  type    = number
+  default = 3
+}
