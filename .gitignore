@@ -39,3 +39,9 @@ terraform.rc
 
 # End of https://www.toptal.com/developers/gitignore/api/terraform
 .terraform.lock.hcl
+
+# SSH keys
+id_rsa*
+
+# K8s
+kubeconfig

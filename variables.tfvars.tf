@@ -14,14 +14,7 @@ variable "location_name" {
 # Tamanho da VM
 variable "vm_size" {
   type    = string
-  default = "Standard_B1ls"
-}
-
-# Nome do Usuário admin
-variable "admin_user" {
-  type      = string
-  default   = "adminuser"
-  sensitive = true
+  default = "Standard_B2s"
 }
 
 # Imagem
@@ -48,5 +41,5 @@ variable "image_version" {
 # Quantidades de VMs
 variable "qts_vms" {
   type    = number
-  default = 3
+  default = 2
 }
