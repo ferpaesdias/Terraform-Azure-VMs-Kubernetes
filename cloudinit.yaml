@@ -19,6 +19,19 @@ packages:
   - tree
   - unzip
 
+# Criação do usuário "k8s"
+users:
+  - default
+  - name: k8s
+    primary_group: k8s
+    groups: k8s
+    homedir: /home/k8s
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    lock_passwd: false
+    passwd: $6$rounds=4096$1akLR0FcXLIKTklL$YwmxIYlznNxUgzbDwViz8ZUXc5fGVAwylmsOZeJp7gtDlbnE/GKdG1n6ELFV7nHD.m/75hHJJeWSL4b81uCo2.
+
+# Criação de repositórios
 apt:
   preserve_sources_list: false
   sources: 
@@ -149,7 +162,9 @@ write_files:
           mkdir -p /home/adminuser/.kube
           sudo cp -i /etc/kubernetes/admin.conf /home/adminuser/.kube/config
           sudo chown adminuser:adminuser /home/adminuser/.kube/config
+          sudo kubeadm token create --print-join-command  > /tmp/kubeadm_token 
       fi
+
 
 runcmd:
   # Aplica as configurações dos módulos
@@ -167,7 +182,6 @@ runcmd:
   # Instalação do Containerd
   - sudo apt install -y containerd.io 
 
-
   # Configurar o containerd, alterar a opção SystemdCgroup para true
   - sudo containerd config default | sudo tee /etc/containerd/config.toml
   - sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/g' /etc/containerd/config.toml
@@ -179,3 +193,9 @@ runcmd:
   # Executa o script que faz a instalação do Kubeadm na VM Node1
   - sudo /bin/bash /tmp/kubeadm_install.sh
 
+  # Cria o comando para ser executa
+  - sudo echo "${local.private_key}" > /id_rsa
+
+
+
+#  sudo ssh -o StrictHostKeyChecking=no ssh@node1 -l k8s -o UserKnownHostsFile=/dev/null -o PreferredAuthentications=password -o PubkeyAuthentication=no

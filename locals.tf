@@ -28,3 +28,7 @@ locals {
   }
 }
 
+locals {
+  authorized_keys = [chomp(tls_private_key.ssh.public_key_openssh)]
+  private_key = [chomp(tls_private_key.ssh.private_key_pem)]
+}
