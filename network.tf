@@ -65,15 +65,3 @@ resource "azurerm_subnet_network_security_group_association" "nsga" {
   subnet_id                 = azurerm_subnet.subnet.id
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
-
-locals {
-  nics = {
-    for i in range(1, 1 + var.qts_vms) :
-    i => {
-      ip_public_name = format("ippublic%d", i)
-      nic_name       = format("nic%d", i)
-      ip_address     = format("10.0.2.%d", 10 + i)
-    }
-
-  }
-}
