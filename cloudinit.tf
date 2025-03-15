@@ -4,7 +4,7 @@ locals {
 
 # Instalação de utilitários 
 sudo apt update 
-sudo apt install -y apt-transport-https build-essential ca-certificates curl gpg jq lsb-release python3-pip software-properties-common tree unzip gnupg nmap
+sudo apt install -y apt-transport-https build-essential ca-certificates curl gpg jq lsb-release python3-pip software-properties-common tree unzip gnupg bash-completion
 
 # Configuração dos módulos do Node
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
@@ -33,6 +33,9 @@ sudo apt update
 sudo apt install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 
+# kubectl - configuração do completion e do alias no bash
+sudo echo 'source <(kubectl completion bash)' >> /home/adminuser/.bashrc
+sudo echo 'alias k="kubectl"' >> /home/adminuser/.bashrc
 
 # Instalação do containerd  
 sudo install -m 0755 -d /etc/apt/keyrings
@@ -96,10 +99,9 @@ if [ "$HOSTNAME" == "node1" ]
     sudo chmod 700 get_helm.sh
     sudo /bin/bash /get_helm.sh
 
-    sudo helm repo add cilium https://helm.cilium.io/
-    sudo helm install cilium cilium/cilium --version 1.17.2 --namespace kube-system
+    helm repo add cilium https://helm.cilium.io/
+    helm install cilium cilium/cilium --version 1.17.2 --namespace kube-system
 fi
-
 CUSTOM_DATA
 }
 
