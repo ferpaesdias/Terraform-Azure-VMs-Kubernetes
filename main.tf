@@ -33,3 +33,19 @@ resource "azurerm_linux_virtual_machine" "vm" {
     version   = var.image_version
   }
 }
+
+# Configuração de auto-shutdown das VMs
+resource "azurerm_dev_test_global_vm_shutdown_schedule" "shutdown_vms" {
+  for_each = local.nodes
+  virtual_machine_id = azurerm_linux_virtual_machine.vm[each.key].id
+  location = azurerm_resource_group.k8s_vms.location
+  enabled = var.enable_shutdown
+
+  daily_recurrence_time = var.horario_shutdown
+  # https://jackstromberg.com/2017/01/list-of-time-zones-consumed-by-azure/
+  timezone = "E. South America Standard Time"
+
+  notification_settings {
+    enabled = false
+  }
+}

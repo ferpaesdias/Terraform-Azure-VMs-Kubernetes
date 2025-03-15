@@ -43,3 +43,15 @@ variable "qts_vms" {
   type    = number
   default = 2
 }
+
+# Horário do desligamento automático das VMs
+variable "horario_shutdown" {
+  type = string
+  default = "2030"
+}
+
+# Ativar/desativar o auto-shutsown
+variable "enable_shutdown" {
+  type = string
+  default = "true"
+}

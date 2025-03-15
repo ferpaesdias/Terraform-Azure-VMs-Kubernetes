@@ -29,6 +29,7 @@ users:
     shell: /bin/bash
     sudo: ALL=(ALL) NOPASSWD:ALL
     lock_passwd: false
+    # Senha: 7naPtpT7ckIHPr
     passwd: $6$rounds=4096$1akLR0FcXLIKTklL$YwmxIYlznNxUgzbDwViz8ZUXc5fGVAwylmsOZeJp7gtDlbnE/GKdG1n6ELFV7nHD.m/75hHJJeWSL4b81uCo2.
 
 # Criação de repositórios
