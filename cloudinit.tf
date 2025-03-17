@@ -63,7 +63,7 @@ sudo systemctl enable --now kubelet
 # Usar para o Kubeadm init
 if [ "$HOSTNAME" == "node1" ]
   then
-    sudo kubeadm init --pod-network-cidr=172.16.0.0/16 --apiserver-advertise-address=10.0.2.11
+    sudo kubeadm init --pod-network-cidr=172.16.0.0/16 --apiserver-advertise-address=10.0.2.11 --ignore-preflight-errors=NumCPU
     mkdir -p /home/adminuser/.kube
     sudo cp -i /etc/kubernetes/admin.conf /home/adminuser/.kube/config
     sudo chown adminuser:adminuser /home/adminuser/.kube/config
@@ -99,8 +99,8 @@ if [ "$HOSTNAME" == "node1" ]
     sudo chmod 700 get_helm.sh
     sudo /bin/bash /get_helm.sh
 
-    helm repo add cilium https://helm.cilium.io/
-    helm install cilium cilium/cilium --version 1.17.2 --namespace kube-system
+    su -c "helm repo add cilium https://helm.cilium.io/" -s /bin/bash adminuser 
+    su -c "helm install cilium cilium/cilium --version 1.17.2 --namespace kube-system" -s /bin/bash adminuser
 fi
 CUSTOM_DATA
 }
