@@ -4,6 +4,10 @@ resource "azurerm_resource_group" "k8s_vms" {
   location = var.location_name
 }
 
+data "external" "vmspot" {
+  program = ["bash", "${path.module}/vmspot.sh"]
+}
+
 # Criar VM
 resource "azurerm_linux_virtual_machine" "vm" {
   depends_on            = [tls_private_key.ssh, local_file.ssh_private_key, local_file.ssh_public_key, ]
@@ -12,7 +16,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   computer_name         = each.value.node_name
   resource_group_name   = azurerm_resource_group.k8s_vms.name
   location              = azurerm_resource_group.k8s_vms.location
-  size                  = var.vm_size
+  size                  = trimspace(replace(base64decode(data.external.vmspot.result.base64), "\"", ""))
   admin_username        = "adminuser"
   custom_data           = base64encode(local.custom_data)
   network_interface_ids = [azurerm_network_interface.nic[each.key].id, ]
@@ -25,6 +29,11 @@ resource "azurerm_linux_virtual_machine" "vm" {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
+
+  # Spot
+  priority        = "Spot"
+  eviction_policy = "Delete"
+
 
   source_image_reference {
     publisher = var.image_publisher
@@ -49,3 +58,5 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "shutdown_vms" {
     enabled = false
   }
 }
+
+
