@@ -3,7 +3,7 @@ locals {
 #!/bin/env bash
 
 # Ajuste Timezone
-sudo timedatectl set-timezone America/Sao_Paulo
+sudo timedatectl set-timezone ${var.timezone_vms}
 
 # Instalação de utilitários 
 sudo apt update 
