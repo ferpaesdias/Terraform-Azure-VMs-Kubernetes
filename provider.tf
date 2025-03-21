@@ -5,7 +5,7 @@ terraform {
       version = ">=4.22.0"
     }
     azapi = {
-      source = "Azure/azapi"
+      source  = "Azure/azapi"
       version = ">=2.3.0"
     }
   }
