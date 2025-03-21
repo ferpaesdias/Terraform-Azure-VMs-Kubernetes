@@ -2,9 +2,9 @@
 
 # Adaptado de: https://stackoverflow.com/questions/73191837/find-cheapest-spot-supported-size-sku-via-az-cli-or-terraform-provider
 
-REGION="southeastasia"
+REGION="eastus2"
 
-VM_FILTER="sort_by([?(numberOfCores == \`1\` && !contains(name, 'Promo')) && \
+VM_FILTER="sort_by([?(numberOfCores == \`2\` && !contains(name, 'Promo')) && \
 (contains(name, 'Standard_DC') || contains(name, 'Standard_DS') || contains(name, 'Standard_Ds')) || \
 (contains(name, 'Standard_D') && contains(name, '_v3')) || \
 (contains(name, 'Standard_D') && contains(name, '_v4'))], &memoryInMB) | [:9].name"
