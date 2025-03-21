@@ -88,7 +88,7 @@ then
   sudo chown adminuser:adminuser /home/adminuser/.ssh/id_rsa
   sudo chmod 0600 /home/adminuser/.ssh/id_rsa
 
-  # Adiciana Node (Worker) ao Control Plane
+  # Adiciona Node (Worker) ao Control Plane
   a=0
   while [ $a -eq 0 ]
   do
@@ -97,12 +97,12 @@ then
       then
         sudo /bin/bash /tmp/kubetoken
         a=1
-        fi
+      fi
     sleep 1
   done
 fi
 
-# Instalação do Helm e do Cilium (CNI) no Node1
+# Instalação do Helm e do Cilium (CNI - Container Network Interface) no Node1
 if [ "$HOSTNAME" == "node1" ]
   then
     sudo curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
