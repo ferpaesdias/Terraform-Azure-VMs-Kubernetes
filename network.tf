@@ -23,8 +23,7 @@ resource "azurerm_public_ip" "public_ip" {
   allocation_method   = "Static"
 }
 
-
-# Criar uma interface de rede
+# Criar uma interface de rede - NIC (Network Interface Card)
 resource "azurerm_network_interface" "nic" {
   for_each            = local.nics
   name                = each.value.nic_name
@@ -41,6 +40,7 @@ resource "azurerm_network_interface" "nic" {
 }
 
 # Configuração do Network Security Group
+# Por ser um ambiente para testes e estudo, todo o acesso de entrada está liberado.
 resource "azurerm_network_security_group" "nsg" {
   name                = "k8s_nsg"
   location            = azurerm_resource_group.k8s_vms.location
@@ -82,7 +82,6 @@ locals {
       nic_name       = format("nic%d", i)
       ip_address     = format("172.16.2.%d", 10 + i)
     }
-
   }
 }
 
