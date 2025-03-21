@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 
 # Script que seleciona um tamanho de VM Spot
 
@@ -27,12 +27,12 @@ reverse( \
                             (contains(name, 'Standard_D') && contains(name, '_v4')) \
                         ) \
                     ) \
-                ], &numberOfCores \
+                ], &memoryInMB \
             ) \
         ) \
 | [:9].name"
 
-# # Consulta os tamanhos das VMs Spot disponíveis no Azure
+# Consulta os tamanhos das VMs Spot disponíveis no Azure
 az vm list-sizes --location ${REGION} --query "$VM_FILTER" -o json > vmspot/sizes_vmspot.json
 
 # Os comandos abaixo fazem a consulta e filtros para buscar o tamanho da image
