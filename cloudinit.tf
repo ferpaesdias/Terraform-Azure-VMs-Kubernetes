@@ -2,6 +2,9 @@ locals {
   custom_data = <<CUSTOM_DATA
 #!/bin/env bash
 
+# Ajuste Timezone
+sudo timedatectl set-timezone America/Sao_Paulo
+
 # Instalação de utilitários 
 sudo apt update 
 sudo apt install -y apt-transport-https build-essential ca-certificates curl gpg jq lsb-release python3-pip software-properties-common tree unzip gnupg bash-completion
@@ -24,6 +27,11 @@ EOF
 
 sudo sysctl --system
 
+# Adiciona uma entrada do Node1 no Hosts dos Nodes
+cat <<-EOF | sudo tee -a /etc/hosts
+172.16.2.11 node1
+EOF
+
 # Instalação do Kubeadm, Kubectl e Kubelet
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
@@ -39,12 +47,12 @@ sudo echo 'alias k="kubectl"' >> /home/adminuser/.bashrc
 
 # Instalação do containerd  
 sudo install -m 0755 -d /etc/apt/keyrings
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
 sudo chmod a+r /etc/apt/keyrings/docker.asc
 
 echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "$${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 sudo apt update 
@@ -57,13 +65,15 @@ sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/g' /etc/containerd/con
 
 sudo systemctl restart containerd
 
+
 # Habilitar o serviço do kubelet
 sudo systemctl enable --now kubelet
+
 
 # Usar para o Kubeadm init
 if [ "$HOSTNAME" == "node1" ]
   then
-    sudo kubeadm init --pod-network-cidr=172.16.0.0/16 --apiserver-advertise-address=10.0.2.11 --ignore-preflight-errors=NumCPU
+    sudo kubeadm init --apiserver-advertise-address=172.16.2.11 --ignore-preflight-errors=NumCPU
     mkdir -p /home/adminuser/.kube
     sudo cp -i /etc/kubernetes/admin.conf /home/adminuser/.kube/config
     sudo chown adminuser:adminuser /home/adminuser/.kube/config
