@@ -27,7 +27,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
     public_key = join("\n", local.authorized_keys)
   }
 
-  # Cria um disco HDD que é mais barato, porém, é mais lento
+  # Cria um disco HDD que é mais barato, porém, mais lento
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
