@@ -73,7 +73,8 @@ sudo systemctl enable --now kubelet
 # Usar para o Kubeadm init
 if [ "$HOSTNAME" == "node1" ]
   then
-    sudo kubeadm init --apiserver-advertise-address=172.16.2.11 --ignore-preflight-errors=NumCPU
+    PUBLIC_IP=$(curl --silent https://ifconfig.me)
+    kubeadm init --control-plane-endpoint $PUBLIC_IP --apiserver-cert-extra-sans=172.16.2.11,$PUBLIC_IP --ignore-preflight-errors=DirAvailable--var-lib-etcd,NumCPU
     mkdir -p /home/adminuser/.kube
     sudo cp -i /etc/kubernetes/admin.conf /home/adminuser/.kube/config
     sudo chown adminuser:adminuser /home/adminuser/.kube/config
