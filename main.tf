@@ -35,7 +35,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   computer_name       = each.value.node_name
   resource_group_name = azurerm_resource_group.k8s_vms.name
   location            = azurerm_resource_group.k8s_vms.location
-  size                = trimspace(replace(base64decode(data.external.vmspot.result.base64), "\"", ""))
+  size                = trimspace(replace(base64decode(data.external.vmspot.result.size), "\"", ""))
   # size                   = var.vm_size
   admin_username        = "adminuser"
   custom_data           = base64encode(local.custom_data)
