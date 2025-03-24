@@ -1,3 +1,4 @@
+# Coleta o arquivo de configuração /etc/kubernetes/admin.conf
 locals {
   kube_config = <<CUSTOM_DATA
 #!/bin/env bash
@@ -18,6 +19,7 @@ echo "{\"base64\":\"$KUBECONFIG\"}"
 CUSTOM_DATA
 }
 
+# Cria o script 
 resource "local_file" "kubeconfig_sh" {
   content         = local.kube_config
   filename        = "kubeconfig.sh"
