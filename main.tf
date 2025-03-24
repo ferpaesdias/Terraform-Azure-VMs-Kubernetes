@@ -9,6 +9,24 @@ data "external" "vmspot" {
   program = ["bash", "${path.module}/vmspot.sh"]
 }
 
+# Executa o script 'kubeconfig.sh' que Coleta o arquivo de configuração /etc/kubernetes/admin.conf 
+# O arquivo está codificado em Base64
+data "external" "kubeconfig" {
+  depends_on = [azurerm_linux_virtual_machine.vm,azurerm_public_ip.public_ip,local_file.kubeconfig_sh]
+  # for_each   = local.nodes
+  program    = ["bash", "${path.module}/kubeconfig.sh"]
+  
+  query = {
+    ip_public = azurerm_public_ip.public_ip[1].ip_address
+  }
+}
+
+# Recebe os dados do  arquivo de configuração /etc/kubernetes/admin.conf, o decodifica e cria o arquivo "kubeconfig"
+resource "local_file" "kubeconfig" {
+  content         = base64decode(data.external.kubeconfig.result.base64)
+  filename        = "kubeconfig"
+}
+
 # Criar as VMs
 resource "azurerm_linux_virtual_machine" "vm" {
   depends_on          = [tls_private_key.ssh, local_file.ssh_private_key, local_file.ssh_public_key, ]

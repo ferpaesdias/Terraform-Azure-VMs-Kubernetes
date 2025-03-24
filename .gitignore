@@ -45,6 +45,8 @@ id_rsa*
 
 # K8s
 kubeconfig
+kubeconfig.sh
 
 # Dados da VM Spot
 vmspot/*
+
