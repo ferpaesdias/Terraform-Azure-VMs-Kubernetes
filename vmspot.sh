@@ -43,6 +43,9 @@ jq -re '[.[] | "(armSkuName eq \"" + . + "\")"] | " and (" + join(" or ") + ")"'
 sed -i -e "s/\"/'/g" vmspot/url_vmspot.txt
 
 
-SKU_SPOT=$(az rest --method get --url "$(cat vmspot/url_vmspot.txt)" --query "sort_by(Items, &unitPrice) | [?unitPrice < \`${VM_VALUE}\`]" | jq '.[0].armSkuName' | base64 -w0)
+SKU_SPOT=$(az rest --method get --url "$(cat vmspot/url_vmspot.txt)" --query "sort_by(Items, &unitPrice) | [?unitPrice < \`${VM_VALUE}\`]")
+SKU_SPOT_SIZE=$(echo $SKU_SPOT | jq '.[0].armSkuName' | base64 -w0)
+SKU_SPOT_PRICE=$(echo $SKU_SPOT | jq '.[0].unitPrice' | base64 -w0)
 
-echo "{\"base64\":\"${SKU_SPOT}\"}"
+
+echo "{\"size\":\"${SKU_SPOT_SIZE}\", \"price\":\"${SKU_SPOT_PRICE}\"}" 
