@@ -49,4 +49,5 @@ kubeconfig.sh
 
 # Dados da VM Spot
 vmspot/*
+!vmspot/vmspot.sh
 
