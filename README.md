@@ -55,7 +55,7 @@ Será instalado o Kubernetes na versão `1.32` e o CNI (Container Network Interf
     - `id_rsa`: Chave privada do acesso SSH.
     - `id_rsa.pub`: Chave pública do acesso SSH.
     - `kubeconfig`: Arquivo ao qual poderá ser utilizado pelo `kubectl` de sua máquina local para acessar o cluster.
-    - `vmspot`: Diretório de apoio para organizar arquivos criados pelos scripts de configuração.
+    - `vmspot`: Diretório do script `vmspot.sh` e dos arquivos criados por este script.
 
 <br>
 
