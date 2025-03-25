@@ -95,7 +95,7 @@ az account list --output table
 
 <br>
 
-A saída do comando será parecida com está:
+A saída do comando será parecida com esta:
 ```
 Name           CloudName    SubscriptionId                        TenantId                              State    IsDefault
 -------------  -----------  ------------------------------------  ------------------------------------  -------  -----------
@@ -163,8 +163,8 @@ Aplique a configuração do Plan `tfplan_k8s_vms`:
 ```shell
 terraform apply tfplan_k8s_vms
 ```
-Quando terminar a execução do `Terraform apply` será exibido o acesso SSH das VMs e o custo, em dólar, por hora de cada VM.  
-Mesmo depois que a execução do `Terraform apply` estiver finalizada, aguarde alguns minutos para concluir a instalação dos programas nas VMs.
+Quando terminar a execução do `terraform apply` será exibido o acesso SSH das VMs e o custo, em dólar, por hora de cada VM.  
+Mesmo depois que a execução do `terraform apply` estiver finalizada, aguarde alguns minutos para concluir a instalação dos programas nas VMs.
 
 <br>
 
@@ -183,6 +183,7 @@ Quando terminar de usar o ambiente você pode destruí-lo para não ter gastos d
 ```shell
 terraform destroy
 ```
+Digite `yes` quando for solicitado.
 
 <br>
 
