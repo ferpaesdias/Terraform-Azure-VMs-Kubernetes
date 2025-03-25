@@ -43,6 +43,7 @@ Será instalado o Kubernetes na versão `1.32` e o CNI (Container Network Interf
 ## Principais pontos
 
 - O script `vmspot.sh` pesquisa no MS Azure por uma VM `spot`, que tenha a quantidade de vCPUs e memória pré-definidos e que custe menos de U$ 0,05.
+- A quantidade de Nodes pode ser definida em `variables.tf`.
 - Este ambiente utiliza somente famílias de [VMs compatíveis com o Hypervisor Gen 2](https://learn.microsoft.com/pt-br/azure/virtual-machines/generation-2).
 - No MS Azure, cada Subscription tem uma quota de uso de vCPU spot. Se precisar aumentar a quota de vCPU spot veja esta [documentação](https://learn.microsoft.com/pt-br/azure/quotas/spot-quota) do Azure.
 - Por ser um ambiente de estudo, todo o tráfego de entrada e saída é liberado.
