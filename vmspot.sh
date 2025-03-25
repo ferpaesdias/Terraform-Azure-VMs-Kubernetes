@@ -4,7 +4,7 @@
 
 # Adaptado de: https://stackoverflow.com/questions/73191837/find-cheapest-spot-supported-size-sku-via-az-cli-or-terraform-provider
 
-# Escolha a região, o número de vCPUs (Cores) e a quantidade de memória em MB das VMs
+# Escolha a região, o número de vCPUs (Cores) e a quantidade de memória em MB das VMs. A região deve ser a mesma do arquivo "variables.tf".
 REGION="eastus2"  
 NUMBER_CORES="2"
 MEMORY_MB="2048"
