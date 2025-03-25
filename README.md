@@ -15,6 +15,7 @@ O código abaixo foi inspirado no repositório [ampernetacle](https://github.com
 ## Objetivo
 
 Está configuração do Terraform tem como objetivo criar no Microsoft Azure um ambiente para o estudo de Kubernetes com um custo mínimo.  
+Para ambiente em produção recomendo utilizar o [AKS](https://learn.microsoft.com/pt-br/azure/aks/what-is-aks).
 
 <br>
 
@@ -47,6 +48,7 @@ Será instalado o Kubernetes na versão `1.32` e o CNI (Container Network Interf
 - Por ser um ambiente de estudo, todo o tráfego de entrada e saída é liberado.
 - A troca da localização das VMs deve ser realizada nos arquivos `variables.tf` e `vmspot.sh`.
 - No arquivo `variables.tf` também é possível alterar o horário do `Auto-Shutdown` ou desativá-lo.
+- `services` do tipo `LoadBalancer` ficarão com o campo `External-IP` como `pending`. Para expor um serviço crie um `service` do tipo `NodePort`.
 - No diretório do Terraform serão criados os seguintes arquivos:
 
     - `id_rsa`: Chave privada do acesso SSH.
@@ -184,5 +186,3 @@ terraform destroy
 
 > [!NOTE]
 > Ao destruir o ambiente todos os dados serão apagados.
-
-
