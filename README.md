@@ -171,7 +171,7 @@ Mesmo depois que a execução do `Terraform apply` estiver finalizada, aguarde a
 Exporte o conteúdo do arquivo de configuração `kubeconfig` para a variável `KUBECONFIG` e assim poder gerenciar o cluster usando o Kubectl de sua máquina:
 
 ```shell
-export KUBECONFIG=$(cat $PWD/kubeconfig)
+export KUBECONFIG=$PWD/kubeconfig
 kubectl get nodes
 ```
 
