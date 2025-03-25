@@ -64,11 +64,12 @@ Será instalado o Kubernetes na versão `1.32` e o CNI (Container Network Interf
 - Ter o [Terraform instalado](https://developer.hashicorp.com/terraform/install).
 - Ter o [Azure CLI instalado](https://learn.microsoft.com/pt-br/cli/azure/what-is-azure-cli).
 - Ter o [Kubectl instalado](https://kubernetes.io/docs/tasks/tools/).
+- Ter o programa `jq` instalado: `sudo apt install jq`.
 
 <br>
 
 > [!NOTE]
-> Só utilizei o Terraform em máquina local com o Sistema Operacional Linux.  
+> Só utilizei o Terraform em máquina local com o Sistema Operacional Linux baseado em Debian.  
 > Adapte se for utilizar Windows ou MAC.
 
 <br>
