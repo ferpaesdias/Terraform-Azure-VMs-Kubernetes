@@ -6,7 +6,7 @@ resource "azurerm_resource_group" "k8s_vms" {
 
 # Executa o script 'vmspot.sh' para selecionar o tamanho da image VM Spot
 data "external" "vmspot" {
-  program = ["bash", "${path.module}/vmspot.sh"]
+  program = ["bash", "${path.module}/vmspot/vmspot.sh"]
 }
 
 # Executa o script 'kubeconfig.sh' que Coleta o arquivo de configuração /etc/kubernetes/admin.conf 
