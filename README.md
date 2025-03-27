@@ -46,10 +46,12 @@ Será instalado o Kubernetes na versão `1.32` e o CNI (Container Network Interf
 - A quantidade de Nodes pode ser definida em `variables.tf`.
 - Este ambiente utiliza somente famílias de [VMs compatíveis com o Hypervisor Gen 2](https://learn.microsoft.com/pt-br/azure/virtual-machines/generation-2).
 - No MS Azure, cada Subscription tem uma quota de uso de vCPU spot. Se precisar aumentar a quota de vCPU spot veja esta [documentação](https://learn.microsoft.com/pt-br/azure/quotas/spot-quota) do Azure.
+- Apesar das VMs terem o custo baixo, também tem que ser levado em conta o custo de outros itens, como o endereço IP Público, por exemplo.
 - Por ser um ambiente de estudo, todo o tráfego de entrada e saída é liberado.
 - A troca da localização das VMs deve ser realizada nos arquivos `variables.tf` e `vmspot.sh`.
 - No arquivo `variables.tf` também é possível alterar o horário do `Auto-Shutdown` ou desativá-lo.
 - `services` do tipo `LoadBalancer` ficarão com o campo `External-IP` como `pending`. Para expor um serviço crie um `service` do tipo `NodePort`.
+
 - No diretório do Terraform serão criados os seguintes arquivos:
 
     - `id_rsa`: Chave privada do acesso SSH.
