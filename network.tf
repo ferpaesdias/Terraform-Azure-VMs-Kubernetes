@@ -21,6 +21,7 @@ resource "azurerm_public_ip" "public_ip" {
   resource_group_name = azurerm_resource_group.k8s_vms.name
   location            = azurerm_resource_group.k8s_vms.location
   allocation_method   = "Static"
+  domain_name_label   = join("-", [each.value.node_name, random_id.dns.dec])
 }
 
 # Criar uma interface de rede - NIC (Network Interface Card)
@@ -73,6 +74,11 @@ resource "azurerm_network_interface_security_group_association" "nsgnics" {
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
 
+# Cria um sufixo aleatório para o DNS
+resource "random_id" "dns" {
+  byte_length = 3
+} 
+
 
 locals {
   nics = {
@@ -81,6 +87,7 @@ locals {
       ip_public_name = format("ippublic%d", i)
       nic_name       = format("nic%d", i)
       ip_address     = format("172.16.2.%d", 10 + i)
+      node_name      = format("node%d", i)
     }
   }
 }
