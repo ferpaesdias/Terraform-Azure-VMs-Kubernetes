@@ -14,7 +14,7 @@ O código abaixo foi inspirado no repositório [ampernetacle](https://github.com
 
 ## Objetivo
 
-Está configuração do Terraform tem como objetivo criar no Microsoft Azure um ambiente para o estudo de Kubernetes com um custo mínimo.  
+Esta configuração do Terraform tem como objetivo criar no Microsoft Azure um ambiente para o estudo de Kubernetes com um custo mínimo.  
 Para ambiente em produção recomendo utilizar o [AKS](https://learn.microsoft.com/pt-br/azure/aks/what-is-aks).
 
 <br>
